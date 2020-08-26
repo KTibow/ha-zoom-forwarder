@@ -11,7 +11,6 @@ from time import time
 app = Flask(__name__, template_folder="files")
 minify(app=app, html=True, js=True, cssless=True, static=True, caching_limit=0)
 # os.getenv("GITHUB_VERSION_PAT") != None:
-# json
 @app.before_request
 def before_req():
     if "debuggy" not in globals():
@@ -51,7 +50,7 @@ def hello():
     return render_template("home.html")
 # new
 @app.route("/new")
-def hello():
+def new():
     return render_template("new.html")
 # card
 @app.route("/webhook/<theid>")
