@@ -4,12 +4,11 @@ from flask import Flask, send_from_directory, request, redirect, url_for, render
 from flask_minify import minify
 # Various
 import os
-# Static files
-import mimetypes
+from user_agents import parse as ua_parse
 # Server-side timing
 from time import time
 # Init flask
-app = Flask(__name__, template_folder="files")
+app = Flask(__name__)
 minify(app=app, html=True, js=True, cssless=True, static=True, caching_limit=0)
 # os.getenv("GITHUB_VERSION_PAT") != None:
 # json
