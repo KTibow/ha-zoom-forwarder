@@ -10,6 +10,10 @@ from time import time
 # Init flask
 app = Flask(__name__, template_folder="files")
 minify(app=app, html=True, js=True, cssless=True, static=True, caching_limit=0)
+# Form
+from flask_wtf import Form
+from wtforms import EmailField
+import re
 # os.getenv("GITHUB_VERSION_PAT") != None:
 @app.before_request
 def before_req():
@@ -43,6 +47,10 @@ def after_req(response):
         g.after_request_time = time() * 1000
         response.headers["Server-Timing"] += str(round(g.after_request_time - g.before_handle_request_time, 1))
     return response
+# =============== FORM ==============
+url = re.compile(r'^https?://(?:[A-Z-\.])+(?::\d{1,5})?$', re.IGNORECASE)
+class RegisterForm(Form):
+   name = EmailField("Zoom account email")
 # ========== WEB INTERFACE ==========
 # home
 @app.route("/")
