@@ -1,6 +1,6 @@
 # ============== INIT ==============
 # Flask
-from flask import Flask, send_from_directory, request, redirect, url_for, render_template, g
+from flask import Flask, request, redirect, render_template, g
 from flask_minify import minify
 # Various
 import os
@@ -48,7 +48,7 @@ def after_req(response):
 # home
 @app.route("/")
 def hello():
-    return "Hi there!"
+    return render_template("home.html")
 # card
 @app.route("/webhook/<theid>")
 def card(theid):
