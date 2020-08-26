@@ -1,6 +1,6 @@
 # ============== INIT ==============
 # Flask
-from flask import Flask, request, redirect, render_template, g
+from flask import Flask, request, flash, redirect, render_template, g
 from flask_minify import minify
 # Various
 import os
@@ -13,7 +13,7 @@ minify(app=app, html=True, js=True, cssless=True, static=True, caching_limit=0)
 # Form
 from flask_wtf import Form
 from wtforms import TextField
-from wtforms.validators import Email, URL
+from wtforms.validators import Email, URL, Required
 import re
 # os.getenv("GITHUB_VERSION_PAT") != None:
 @app.before_request
@@ -51,15 +51,16 @@ def after_req(response):
 # =============== FORM ==============
 url = re.compile(r'^https?://(?:[A-Z-\.])+(?::\d{1,5})?$', re.IGNORECASE)
 class RegisterForm(Form):
-   name = TextField("Zoom account email", [Email(check_deliverability=True)])
+   name = TextField("Zoom account email", [Required("What do you think you're getting away with? Fill in all fields."), Email(check_deliverability=True)])
 # ========== WEB INTERFACE ==========
 # home
 @app.route("/")
 def hello():
     return render_template("home.html")
 # new
-@app.route("/new")
+@app.route("/new", methods=['GET', 'POST'])
 def new():
+    form = RegisterForm()
     return render_template("new.html")
 # card
 @app.route("/webhook/<theid>")
