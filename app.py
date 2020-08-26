@@ -12,7 +12,8 @@ app = Flask(__name__, template_folder="files")
 minify(app=app, html=True, js=True, cssless=True, static=True, caching_limit=0)
 # Form
 from flask_wtf import Form
-from wtforms import EmailField
+from wtforms import TextField
+from wtforms.validators import Email, URL
 import re
 # os.getenv("GITHUB_VERSION_PAT") != None:
 @app.before_request
@@ -50,7 +51,7 @@ def after_req(response):
 # =============== FORM ==============
 url = re.compile(r'^https?://(?:[A-Z-\.])+(?::\d{1,5})?$', re.IGNORECASE)
 class RegisterForm(Form):
-   name = EmailField("Zoom account email")
+   name = TextField("Zoom account email", [Email(check_deliverability=True)])
 # ========== WEB INTERFACE ==========
 # home
 @app.route("/")
