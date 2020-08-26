@@ -49,6 +49,10 @@ def after_req(response):
 @app.route("/")
 def hello():
     return render_template("home.html")
+# new
+@app.route("/new")
+def hello():
+    return render_template("new.html")
 # card
 @app.route("/webhook/<theid>")
 def card(theid):
