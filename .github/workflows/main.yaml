@@ -1,0 +1,25 @@
+name: Test running server
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/cache@v2
+      with:
+        path: ~/.cache/pip
+        key: pip-packs-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          pip-packs-
+    - name: Update prexisting packages
+      run: pip3 install -U pip setuptools wheel
+    - name: Install from requirements
+      run: pip3 install -r requirements.txt
+    - name: Test booting the server
+      run: python3 testboot.py
