@@ -1,7 +1,7 @@
 # ============== INIT ==============
 # Flask
 from flask import Flask, request, flash, redirect, render_template, g, session
-from multidict import MultiDict
+from werkzeug.datastructures import MultiDict
 from flask_minify import minify
 from flask_bootstrap import Bootstrap
 from flask_nav import Nav
@@ -139,7 +139,7 @@ def new():
     else:
         formdata = session.get("formdata", None)
         if formdata:
-            form = formdata
+            form = RegisterForm(MultiDict(formdata))
             form.validate()
             session.pop("formdata")
         return render_template("new.html", form=form)
