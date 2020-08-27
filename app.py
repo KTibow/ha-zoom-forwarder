@@ -1,11 +1,18 @@
 # ============== INIT ==============
 # Flask
 from flask import Flask, request, flash, redirect, render_template, g, session
+# # Forms
 from werkzeug.datastructures import MultiDict
+# # Minify
 from flask_minify import minify
+# # Bootstrap
 from flask_bootstrap import Bootstrap
+# # Nav
 from flask_nav import Nav
 from flask_nav.elements import Navbar, View
+# # Database
+from flask_sqlalchemy import SQLAlchemy
+from models import User
 
 # Various
 import os
@@ -16,22 +23,30 @@ from time import time
 
 # Init flask
 app = Flask(__name__, template_folder="files")
+# # Forms
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 app.config["RECAPTCHA_USE_SSL"] = True
 app.config["RECAPTCHA_PUBLIC_KEY"] = "6LeRD8QZAAAAANbqikR8ic0Vdg5ckUftWCmxy4B7"
 app.config["RECAPTCHA_PRIVATE_KEY"] = os.getenv("CAPTCHA_KEY")
 app.config["RECAPTCHA_DATA_ATTRS"] = {"theme": "dark"}
+# # Minify
 minify(app=app, html=True, js=True, cssless=True, static=True, caching_limit=0)
+# # Bootstrap
 Bootstrap(app)
+# # Nav
 nav = Nav()
 nav.register_element("top", Navbar("HAZF", View("Home", "hello"), View("New", "new"),))
 nav.init_app(app)
+# # Database
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+db = SQLAlchemy(app)
 # Form
 from flask_wtf import FlaskForm, RecaptchaField, Recaptcha
 from wtforms import TextField, BooleanField, SubmitField
 from wtforms.validators import Email, URL, DataRequired, InputRequired, ValidationError
 import re
 import requests
+
 
 
 @app.before_request
