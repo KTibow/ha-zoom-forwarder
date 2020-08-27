@@ -228,9 +228,7 @@ def thanks():
                 form.validate()
                 session.pop("formdata")
             return render_template("new.html", form=form)
-
         # print(requests.get("https://api.zoom.us/v2/users", params={"Authorization": "Bearer " + token}).json())
-        return render_template("thanks.html")
     else:
         return "I couldn't find a token."
 
