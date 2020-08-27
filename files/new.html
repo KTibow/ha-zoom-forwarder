@@ -7,6 +7,9 @@
       body {
         margin: 20px;
       }
+      * {
+        font-weight: bold;
+      }
     </style>
   </head>
   <body>
@@ -15,7 +18,7 @@
        <div style="color: red;">{{ message }}</div>
     {% endfor %}
     <form method="POST" action="/submit">
-      <fieldset style="font-weight: bold;">
+      <fieldset>
         <legend>Setup</legend>
         {{ form.hidden_tag() }}
         {{ form.email.label }}
