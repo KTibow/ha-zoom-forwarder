@@ -1,31 +1,28 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>HAZF setup: Home Assistant Zoom Forwarder</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <style>
-      body {
-        margin: 20px;
-      }
-      * {
-        font-weight: bold;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>HAZF setup: Home Assistant Zoom Forwarder setup</h1>
-    {% for message in form.email.errors %}
-       <div style="color: red;">{{ message }}</div>
-    {% endfor %}
-    <form method="POST" action="/submit">
-      <fieldset>
-        <legend>Setup</legend>
-        {{ form.hidden_tag() }}
-        {{ form.email.label }}
-        {{ form.email }}
-        <br>
-        {{ form.submit }}
-      </fieldset>
-    </form>
-  </body>
-</html>
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block html_attribs %} lang="en"{% endblock %}
+{% block title %}HAZF setup{% endblock %}
+{% block styles %}
+  {{ super() }}
+  <style>
+    body {
+      margin: 20px;
+    }
+    * {
+      font-weight: bold;
+    }
+  </style>
+{% endblock %}
+{% block content %}
+  <h1>HAZF setup: Home Assistant Zoom Forwarder setup</h1>
+  {{ wtf.form_errors(form, hiddens="only") }}
+  <form method="POST" action="/submit">
+    <fieldset>
+      <legend>Setup</legend>
+      {{ form.hidden_tag() }}
+      {{ wtf.form_field(form.email) }}
+      <br>
+      {{ wtf.form_field(form.submit) }}
+    </fieldset>
+  </form>
+{% endblock %}
