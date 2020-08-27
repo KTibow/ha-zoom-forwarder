@@ -144,7 +144,6 @@ def err500(e):
     )
 
 # navbar
-@nav.navigation()
 nav.register_element('top', Navbar(
         'HAZF',
         View('Home', '/'),
