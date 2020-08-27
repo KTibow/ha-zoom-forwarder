@@ -13,6 +13,9 @@
     }
   </style>
 {% endblock %}
+{% block navbar %}
+  {{ nav.mynavbar.render() }}
+{% endblock %}
 {% block content %}
   <h1>HAZF setup: Home Assistant Zoom Forwarder setup</h1>
   {{ wtf.form_errors(form, hiddens="only") }}
