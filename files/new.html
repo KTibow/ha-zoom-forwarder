@@ -15,11 +15,13 @@
        <div style="color: red;">{{ message }}</div>
     {% endfor %}
     <form method="POST" action="/submit">
-      <fieldset>
+      <fieldset style="font-weight: bold;">
         <legend>Setup</legend>
         {{ form.hidden_tag() }}
         {{ form.email.label }}
         {{ form.email }}
+        <br>
+        {{ form.submit }}
       </fieldset>
     </form>
   </body>
