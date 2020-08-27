@@ -16,13 +16,17 @@ from time import time
 # Init flask
 app = Flask(__name__, template_folder="files")
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
+app.config["RECAPTCHA_USE_SSL"] = True
+app.config["RECAPTCHA_PUBLIC_KEY"] = "6LeRD8QZAAAAANbqikR8ic0Vdg5ckUftWCmxy4B7"
+app.config["RECAPTCHA_PRIVATE_KEY"] = os.getenv("CAPTCHA_KEY")
+app.config["RECAPTCHA_DATA_ATTRS"] = {'theme': 'dark'}
 minify(app=app, html=True, js=True, cssless=True, static=True, caching_limit=0)
 Bootstrap(app)
 nav = Nav()
 nav.register_element("top", Navbar("HAZF", View("Home", "hello"), View("New", "new"),))
 nav.init_app(app)
 # Form
-from flask_wtf import FlaskForm
+from flask_wtf import FlaskForm, RecaptchaField
 from wtforms import TextField, BooleanField, SubmitField
 from wtforms.validators import Email, URL, DataRequired, InputRequired, ValidationError
 import re
@@ -105,6 +109,7 @@ class RegisterForm(FlaskForm):
         ],
     )
     age = BooleanField("I'm >13 (so I have permission to store your email)", validators=[DataRequired()])
+    recaptcha = RecaptchaField()
     submit = SubmitField("Add / edit")
 
 
