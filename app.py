@@ -24,7 +24,7 @@ nav.init_app(app)
 # Form
 from flask_wtf import FlaskForm
 from wtforms import TextField, SubmitField
-from wtforms.validators import Email, URL, Required, ValidationError
+from wtforms.validators import Email, URL, DataRequired, InputRequired, ValidationError
 import re
 import requests
 
@@ -88,7 +88,7 @@ class RegisterForm(FlaskForm):
     url = TextField(
         "Home Assistant URL",
         [
-            Required("What do you think you're getting away with? Fill in all fields."),
+            InputRequired("What do you think you're getting away with? Fill in all fields."),
             URL(message="That's an invalid URL."),
             check_url,
         ],
@@ -96,10 +96,11 @@ class RegisterForm(FlaskForm):
     email = TextField(
         "Zoom account email",
         [
-            Required("What do you think you're getting away with? Fill in all fields."),
+            InputRequired("What do you think you're getting away with? Fill in all fields."),
             Email(check_deliverability=True, message="That's an invalid email."),
         ],
     )
+    age = BooleanField("I'm >13 (so I have permission to store your email)", validators=[DataRequired()])
     submit = SubmitField("Add / edit")
 
 
