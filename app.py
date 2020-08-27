@@ -1,15 +1,20 @@
 # ============== INIT ==============
 # Flask
 from flask import Flask, request, flash, redirect, render_template, g, session
+
 # # Forms
 from werkzeug.datastructures import MultiDict
+
 # # Minify
 from flask_minify import minify
+
 # # Bootstrap
 from flask_bootstrap import Bootstrap
+
 # # Nav
 from flask_nav import Nav
 from flask_nav.elements import Navbar, View
+
 # # Database
 from flask_sqlalchemy import SQLAlchemy
 
@@ -37,8 +42,10 @@ nav = Nav()
 nav.register_element("top", Navbar("HAZF", View("Home", "hello"), View("New", "new"),))
 nav.init_app(app)
 # # Database
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
 db = SQLAlchemy(app)
+
+
 class User(db.Model):
     __tablename__ = "users"
 
@@ -49,13 +56,14 @@ class User(db.Model):
 
     def __repr__(self):
         return f"User {self.email}"
+
+
 # Form
 from flask_wtf import FlaskForm, RecaptchaField, Recaptcha
 from wtforms import TextField, BooleanField, SubmitField
 from wtforms.validators import Email, URL, DataRequired, InputRequired, ValidationError
 import re
 import requests
-
 
 
 @app.before_request
