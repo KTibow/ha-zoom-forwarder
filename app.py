@@ -12,7 +12,6 @@ from flask_nav import Nav
 from flask_nav.elements import Navbar, View
 # # Database
 from flask_sqlalchemy import SQLAlchemy
-from models import User
 
 # Various
 import os
@@ -40,6 +39,7 @@ nav.init_app(app)
 # # Database
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 db = SQLAlchemy(app)
+from models import User
 # Form
 from flask_wtf import FlaskForm, RecaptchaField, Recaptcha
 from wtforms import TextField, BooleanField, SubmitField
