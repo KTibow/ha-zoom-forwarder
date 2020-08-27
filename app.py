@@ -146,10 +146,17 @@ def new():
         return render_template("new.html", form=form)
 
 
-# card
-@app.route("/webhook/<theid>")
-def card(theid):
-    return render_template("play.html", uid=theid)
+
+# thanks
+@app.route("/thanks")
+def thanks():
+    return render_template("thanks.html")
+
+# webhook
+@app.route("/webhook/<theid>", methods=["GET", "POST"])
+def webhook(theid):
+    print(theid, request.method, request)
+    return ""
 
 
 # 404
