@@ -43,7 +43,7 @@ minify(app=app, html=True, js=True, cssless=True, static=True, caching_limit=0)
 Bootstrap(app)
 # # Nav
 nav = Nav()
-nav.register_element("top", Navbar("HAZF", View("Home", "hello"), View("New", "new"),))
+nav.register_element("top", Navbar("HAZF", View("Home", "hello"), View("New", "setup"),))
 nav.init_app(app)
 # # Database
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
@@ -158,6 +158,10 @@ class RegisterForm(FlaskForm):
 
 
 # ========== WEB INTERFACE ==========
+# redirect to setup
+@app.route("/setup")
+def setup():
+    return redirect("https://zoom.us/oauth/authorize?response_type=code&client_id=n4gjRU19TeGm0YQDf47FdA&redirect_uri=https%3A%2F%2Fha-zoom-forwarder.herokuapp.com%2Fthanks", code=302)
 # home
 @app.route("/")
 def hello():
