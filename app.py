@@ -190,6 +190,8 @@ def thanks():
     args = dict(request.args)
     if "code" in args:
         token = args["code"]
+        print(token)
+        print("n4gjRU19TeGm0YQDf47FdA" + ":" + os.getenv("ZOOM_SECRET"))
         print(
             requests.post(
                 "https://zoom.us/oauth/token",
