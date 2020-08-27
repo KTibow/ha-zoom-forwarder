@@ -20,6 +20,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 # # Zoom
 import base64
+import threading
 
 # Various
 import os
@@ -54,7 +55,8 @@ class User(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     url = db.Column(db.String(120), index=True, unique=True)
-    token = db.Column(db.String(120), index=True, unique=True)
+    token = db.Column(db.String(200), index=True, unique=True)
+    refresh = db.Column(db.String(200), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
 
     def __repr__(self):
@@ -190,9 +192,7 @@ def thanks():
     args = dict(request.args)
     if "code" in args:
         token = args["code"]
-        print(token)
-        print("n4gjRU19TeGm0YQDf47FdA" + ":" + os.getenv("ZOOM_SECRET"))
-        print(
+        userdata = (
             requests.post(
                 "https://zoom.us/oauth/token",
                 params={
