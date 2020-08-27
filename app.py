@@ -26,7 +26,7 @@ nav = Nav()
 nav.register_element("top", Navbar("HAZF", View("Home", "hello"), View("New", "new"),))
 nav.init_app(app)
 # Form
-from flask_wtf import FlaskForm, RecaptchaField
+from flask_wtf import FlaskForm, RecaptchaField, Recaptcha
 from wtforms import TextField, BooleanField, SubmitField
 from wtforms.validators import Email, URL, DataRequired, InputRequired, ValidationError
 import re
@@ -111,7 +111,7 @@ class RegisterForm(FlaskForm):
     age = BooleanField(
         "I'm >13 (so I have permission to store your email)", validators=[DataRequired()]
     )
-    recaptcha = RecaptchaField()
+    recaptcha = RecaptchaField("I'm not a robot spammer, or a spammer robot, or a spammer human, or a human spammer", validators=[Recaptcha(message="That's an empty checkbox.")])
     submit = SubmitField("Add / edit")
 
 
