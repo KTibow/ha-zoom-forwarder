@@ -181,9 +181,13 @@ def new():
 # thanks
 @app.route("/thanks")
 def thanks():
-    print(dict(request.args))
-    # , requests.get("https://api.zoom.us/v2/users", params={"Authorization": "Bearer " + request.args["token"]}).text
-    return render_template("thanks.html")
+    args = dict(request.args)
+    if "token" in args:
+        token = args["token"]
+        print(requests.get("https://api.zoom.us/v2/users", params={"Authorization": "Bearer " + token}).json)
+        return render_template("thanks.html")
+    else:
+        return "I couldn't find a token."
 
 
 # webhook
