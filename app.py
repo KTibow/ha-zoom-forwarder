@@ -3,6 +3,8 @@
 from flask import Flask, request, flash, redirect, render_template, g
 from flask_minify import minify
 from flask_bootstrap import Bootstrap
+from flask_nav import Nav
+from flask_nav.elements import Navbar, View
 
 # Various
 import os
@@ -16,6 +18,8 @@ app = Flask(__name__, template_folder="files")
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 minify(app=app, html=True, js=True, cssless=True, static=True, caching_limit=0)
 Bootstrap(app)
+nav = Nav()
+nav.init_app(app)
 # Form
 from flask_wtf import FlaskForm
 from wtforms import TextField, SubmitField
@@ -138,4 +142,13 @@ def err500(e):
     return (
         "500: There's a bug! But don't worry, it's inside Heroku, not you. It'll probably soon get fixed.",
         500,
+    )
+
+# navbar
+@nav.navigation()
+def mynavbar():
+    return Navbar(
+        'HAZF',
+        View('Home', '/'),
+        View('New', '/new'),
     )
