@@ -1,6 +1,7 @@
 {% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 {% block html_attribs %} lang="en"{% endblock %}
-{% block title %}HAZF complete{% endblock %}
+{% block title %}HAZF setup{% endblock %}
 {% block styles %}
   {{ super() }}
   <style>
@@ -8,6 +9,9 @@
       padding: 20px;
       max-width: 100vh;
       margin: 0 auto;
+    }
+    *:not(input[type="text"]):not(i) {
+      font-weight: bold !important;
     }
     .navbar {
       background-color: blueviolet;
@@ -32,6 +36,20 @@
   {{ nav.top.render() }}
 {% endblock %}
 {% block content %}
-  <h1>You're installed.</h1>
-  <p>Thanks. You've successfully linked Zoom. Make sure to register in order to actually get stuff.</p>
+  <h1>HAZF setup: Home Assistant Zoom Forwarder setup</h1>
+  {{ wtf.form_errors(form, hiddens="only") }}
+  <form method="POST">
+    <fieldset>
+      <legend>Setup</legend>
+      {{ form.hidden_tag() }}
+      <div style="display: none;">
+        {{ wtf.form_field(form.token) }}
+      </div>
+      {{ wtf.form_field(form.url) }}
+      <i>Used for forwarding requests</i>
+      {{ wtf.form_field(form.age) }}
+      {{ wtf.form_field(form.recaptcha) }}
+      {{ wtf.form_field(form.submit, button_map={"submit": "primary"}) }}
+    </fieldset>
+  </form>
 {% endblock %}
