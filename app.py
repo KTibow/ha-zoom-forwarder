@@ -86,6 +86,7 @@ def check_url(form, field):
         res = requests.get(field.data, timeout=1)
         res.raise_for_status()
     except Exception as e:
+        print(e)
         raise ValidationError("That's an unconnectable URL.")
     if len(field.data.split("/")) > 4:
         raise ValidationError("That's not a base URL.")
