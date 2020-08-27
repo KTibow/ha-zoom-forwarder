@@ -146,11 +146,11 @@ def new():
         return render_template("new.html", form=form)
 
 
-
 # thanks
 @app.route("/thanks")
 def thanks():
     return render_template("thanks.html")
+
 
 # webhook
 @app.route("/webhook/<theid>", methods=["GET", "POST"])
