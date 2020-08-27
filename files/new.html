@@ -12,12 +12,14 @@
   <body>
     <h1>HAZF setup: Home Assistant Zoom Forwarder setup</h1>
     {% for message in form.email.errors %}
-       <div>{{ message }}</div>
+       <div style="color: red;">{{ message }}</div>
     {% endfor %}
     <form method="POST" action="/submit">
       <fieldset>
         <legend>Setup</legend>
         {{ form.hidden_tag() }}
+        {{ form.email.label }}
+        {{ form.email }}
       </fieldset>
     </form>
   </body>
