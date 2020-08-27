@@ -132,6 +132,12 @@ def check_url(form, field):
 
 
 class RegisterForm(FlaskForm):
+    token = TextField(
+        "Zoom token (auto-generated)",
+        [
+            InputRequired("Zoom token not found."),
+        ],
+    )
     url = TextField(
         "Home Assistant URL",
         [
