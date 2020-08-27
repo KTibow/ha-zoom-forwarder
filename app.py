@@ -210,6 +210,7 @@ def thanks():
         if request.method == "POST":
             if not form.validate():
                 session["formdata"] = request.form
+                print("Invalid.")
                 return redirect("/new?code=" + token, code=302)
             else:
                 userdata = requests.post(
@@ -227,6 +228,7 @@ def thanks():
                     },
                 ).json()
                 print(userdata)
+                return "It works!"
         else:
             formdata = session.get("formdata", None)
             if formdata:
