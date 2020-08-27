@@ -19,7 +19,7 @@ Bootstrap(app)
 # Form
 from flask_wtf import FlaskForm
 from wtforms import TextField, SubmitField
-from wtforms.validators import Email, URL, Required
+from wtforms.validators import Email, URL, Required, ValidationError
 import re
 
 
