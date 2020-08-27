@@ -179,12 +179,13 @@ def new():
 
 
 # thanks
-@app.route("/thanks")
+@app.route("/thanks", methods=["GET", "POST"])
 def thanks():
+    print(request.method, request.data, request.form, request.args)
     args = dict(request.args)
     if "token" in args:
-        token = args["token"]
-        print(requests.get("https://api.zoom.us/v2/users", params={"Authorization": "Bearer " + token}).json)
+        token = args["code"]
+        print(requests.get("https://api.zoom.us/v2/users", params={"Authorization": "Bearer " + token}).json())
         return render_template("thanks.html")
     else:
         return "I couldn't find a token."
