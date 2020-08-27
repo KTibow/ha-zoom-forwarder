@@ -84,7 +84,7 @@ def after_req(response):
 def check_url(form, field):
     try:
         res = requests.get(field.data, timeout=1)
-        res.raise_for_status()
+        res.raise_for_status()getlist
     except Exception as e:
         raise ValidationError("That's an unconnectable URL.")
     if len(field.data.split("/")) > 4:
@@ -139,7 +139,7 @@ def new():
     else:
         formdata = session.get("formdata", None)
         if formdata:
-            form = RegisterForm(formdata)
+            form = formdata
             form.validate()
             session.pop("formdata")
         return render_template("new.html", form=form)
