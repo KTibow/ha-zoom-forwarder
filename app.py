@@ -143,10 +143,7 @@ def err500(e):
         500,
     )
 
+
 # navbar
-nav.register_element('top', Navbar(
-        'HAZF',
-        View('Home', '/'),
-        View('New', '/new'),
-    ))
+nav.register_element("top", Navbar("HAZF", View("Home", "/"), View("New", "/new"),))
 nav.init_app(app)
