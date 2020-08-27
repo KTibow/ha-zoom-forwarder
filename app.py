@@ -1,6 +1,6 @@
 # ============== INIT ==============
 # Flask
-from flask import Flask, request, flash, redirect, render_template, g
+from flask import Flask, request, flash, redirect, render_template, g, session
 from flask_minify import minify
 from flask_bootstrap import Bootstrap
 from flask_nav import Nav
@@ -128,10 +128,16 @@ def new():
     form = RegisterForm()
     if request.method == "POST":
         if not form.validate():
-            return render_template("new.html", form=form)
+            session['formdata'] = request.form
+            return redirect("/new", code=302)
         else:
             return redirect("/", code=302)
     else:
+        formdata = session.get('formdata', None)
+        if formdata:
+            form = MyForm(MultiDict(formdata))
+            form.validate()
+            session.pop('formdata')
         return render_template("new.html", form=form)
 
 
