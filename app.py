@@ -68,15 +68,27 @@ def after_req(response):
 
 
 # =============== FORM ==============
-url = re.compile(r"^https?://(?:[A-Z-\.])+(?::\d{1,5})?$", re.IGNORECASE)
 
-
+def check_url(form, field):
+    try:
+        res = requests.get(field.data)
+        res.raise_for_status()
+    except Exception as e:
+        raise ValidationError("That's an unconnectable URL.")
 class RegisterForm(FlaskForm):
+    url = TextField(
+        "Home Assistant URL",
+        [
+            Required("What do you think you're getting away with? Fill in all fields."),
+            URL(message="That's an invalid URL."),
+            check_url
+        ],
+    )
     email = TextField(
         "Zoom account email",
         [
             Required("What do you think you're getting away with? Fill in all fields."),
-            Email(check_deliverability=True),
+            Email(check_deliverability=True, message="That's an invalid email."),
         ],
     )
     submit = SubmitField("Add / edit")
@@ -95,10 +107,9 @@ def new():
     form = RegisterForm()
     if request.method == "POST":
         if not form.validate():
-            flash("All fields are required.")
             return render_template("new.html", form=form)
         else:
-            return render_template("home.html")
+            return redirect("/", code=302)
     else:
         return render_template("new.html", form=form)
 
