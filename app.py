@@ -84,7 +84,7 @@ def after_req(response):
 def check_url(form, field):
     try:
         res = requests.get(field.data, timeout=1)
-        res.raise_for_status()getlist
+        res.raise_for_status()
     except Exception as e:
         raise ValidationError("That's an unconnectable URL.")
     if len(field.data.split("/")) > 4:
