@@ -21,7 +21,7 @@
       <legend>Setup</legend>
       {{ form.hidden_tag() }}
       {{ wtf.form_field(form.email) }}
-      {{ wtf.form_field(form.submit) }}
+      {{ wtf.form_field(form.submit, button_map={"submit": "primary"}) }}
     </fieldset>
   </form>
 {% endblock %}
