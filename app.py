@@ -69,19 +69,22 @@ def after_req(response):
 
 # =============== FORM ==============
 
+
 def check_url(form, field):
     try:
         res = requests.get(field.data)
         res.raise_for_status()
     except Exception as e:
         raise ValidationError("That's an unconnectable URL.")
+
+
 class RegisterForm(FlaskForm):
     url = TextField(
         "Home Assistant URL",
         [
             Required("What do you think you're getting away with? Fill in all fields."),
             URL(message="That's an invalid URL."),
-            check_url
+            check_url,
         ],
     )
     email = TextField(
