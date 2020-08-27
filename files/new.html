@@ -7,14 +7,18 @@
       body {
         margin: 20px;
       }
-      p {
-        text-indent: 1em;
-      }
     </style>
   </head>
   <body>
     <h1>HAZF setup: Home Assistant Zoom Forwarder setup</h1>
+    {% for message in form.email.errors %}
+       <div>{{ message }}</div>
+    {% endfor %}
     <form method="POST" action="/submit">
+      <fieldset>
+        <legend>Setup</legend>
+        {{ form.hidden_tag() }}
+      </fieldset>
     </form>
   </body>
 </html>
