@@ -51,7 +51,7 @@ def after_req(response):
 # =============== FORM ==============
 url = re.compile(r'^https?://(?:[A-Z-\.])+(?::\d{1,5})?$', re.IGNORECASE)
 class RegisterForm(Form):
-   name = TextField("Zoom account email", [Required("What do you think you're getting away with? Fill in all fields."), Email(check_deliverability=True)])
+   email = TextField("Zoom account email", [Required("What do you think you're getting away with? Fill in all fields."), Email(check_deliverability=True)])
 # ========== WEB INTERFACE ==========
 # home
 @app.route("/")
@@ -61,7 +61,7 @@ def hello():
 @app.route("/new", methods=['GET', 'POST'])
 def new():
     form = RegisterForm()
-    return render_template("new.html")
+    return render_template("new.html", form=form)
 # card
 @app.route("/webhook/<theid>")
 def card(theid):
