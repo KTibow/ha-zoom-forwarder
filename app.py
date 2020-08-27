@@ -2,6 +2,7 @@
 # Flask
 from flask import Flask, request, flash, redirect, render_template, g
 from flask_minify import minify
+from flask_bootstrap import Bootstrap
 
 # Various
 import os
@@ -14,6 +15,7 @@ from time import time
 app = Flask(__name__, template_folder="files")
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 minify(app=app, html=True, js=True, cssless=True, static=True, caching_limit=0)
+Bootstrap(app)
 # Form
 from flask_wtf import FlaskForm
 from wtforms import TextField, SubmitField
