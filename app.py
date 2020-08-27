@@ -188,7 +188,7 @@ def thanks():
     args = dict(request.args)
     if "token" in args:
         token = args["code"]
-        print(requests.post("https://zoom.us/oauth/token", params={"grant_type": "authorization_code", "code": token, "redirect_uri": "https://ha-zoom-forwarder.herokuapp.com/thanks"}, headers={"Authorization": "Basic " + base64.b64encode("n4gjRU19TeGm0YQDf47FdA" + os.getenv("ZOOM_SECRET")}).json())
+        print(requests.post("https://zoom.us/oauth/token", params={"grant_type": "authorization_code", "code": token, "redirect_uri": "https://ha-zoom-forwarder.herokuapp.com/thanks"}, headers={"Authorization": "Basic " + base64.b64encode("n4gjRU19TeGm0YQDf47FdA" + os.getenv("ZOOM_SECRET"))}).json())
         #print(requests.get("https://api.zoom.us/v2/users", params={"Authorization": "Bearer " + token}).json())
         return render_template("thanks.html")
     else:
