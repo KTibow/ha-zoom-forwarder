@@ -37,6 +37,10 @@
     <fieldset>
       <legend>Setup</legend>
       {{ form.hidden_tag() }}
+      <p>
+        <i>This is just used to forward requests. No nefarious stuff here!
+        </i>
+      </p>
       {{ wtf.form_field(form.url) }}
       <p>
         <i>This app gets multiple requests from multiple emails, and will use that email to only send your Zoom events to your Home Assistant.<br>
