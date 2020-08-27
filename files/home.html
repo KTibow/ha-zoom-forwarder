@@ -2,12 +2,15 @@
 {% block html_attribs %} lang="en"{% endblock %}
 {% block title %}HAZF{% endblock %}
 {% block styles %}
-{{ super() }}
-<style>
-  body {
-    margin: 20px;
-  }
-</style>
+  {{ super() }}
+  <style>
+    body {
+      margin: 20px;
+    }
+  </style>
+{% endblock %}
+{% block navbar %}
+  {{ nav.mynavbar.render() }}
 {% endblock %}
 {% block content %}
 <h1>Home Assistant Zoom Forwarder</h1>
