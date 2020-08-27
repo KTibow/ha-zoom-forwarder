@@ -187,9 +187,8 @@ def new():
 # thanks
 @app.route("/thanks", methods=["GET", "POST"])
 def thanks():
-    print(request.method, request.data, request.form, request.args)
     args = dict(request.args)
-    if "token" in args:
+    if "code" in args:
         token = args["code"]
         print(
             requests.post(
@@ -201,7 +200,7 @@ def thanks():
                 },
                 headers={
                     "Authorization": "Basic "
-                    + base64.b64encode("n4gjRU19TeGm0YQDf47FdA" + os.getenv("ZOOM_SECRET"))
+                    + base64.b64encode("n4gjRU19TeGm0YQDf47FdA" + ":" + os.getenv("ZOOM_SECRET"))
                 },
             ).json()
         )
