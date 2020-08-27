@@ -19,7 +19,7 @@ app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 app.config["RECAPTCHA_USE_SSL"] = True
 app.config["RECAPTCHA_PUBLIC_KEY"] = "6LeRD8QZAAAAANbqikR8ic0Vdg5ckUftWCmxy4B7"
 app.config["RECAPTCHA_PRIVATE_KEY"] = os.getenv("CAPTCHA_KEY")
-app.config["RECAPTCHA_DATA_ATTRS"] = {'theme': 'dark'}
+app.config["RECAPTCHA_DATA_ATTRS"] = {"theme": "dark"}
 minify(app=app, html=True, js=True, cssless=True, static=True, caching_limit=0)
 Bootstrap(app)
 nav = Nav()
@@ -108,7 +108,9 @@ class RegisterForm(FlaskForm):
             Email(check_deliverability=True, message="That's an invalid email."),
         ],
     )
-    age = BooleanField("I'm >13 (so I have permission to store your email)", validators=[DataRequired()])
+    age = BooleanField(
+        "I'm >13 (so I have permission to store your email)", validators=[DataRequired()]
+    )
     recaptcha = RecaptchaField()
     submit = SubmitField("Add / edit")
 
@@ -154,6 +156,3 @@ def err500(e):
         "500: There's a bug! But don't worry, it's inside Heroku, not you. It'll probably soon get fixed.",
         500,
     )
-
-
-
