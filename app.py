@@ -1,7 +1,7 @@
 # ============== INIT ==============
 # Flask
 from flask import Flask, request, flash, redirect, render_template, g, session
-from werkzeug import MultiDict
+from multidict import MultiDict
 from flask_minify import minify
 from flask_bootstrap import Bootstrap
 from flask_nav import Nav
