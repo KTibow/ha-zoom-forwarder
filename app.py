@@ -168,7 +168,7 @@ def new():
             session["formdata"] = request.form
             return redirect("/new", code=302)
         else:
-            return redirect("/", code=302)
+            return redirect("https://zoom.us/oauth/authorize?response_type=code&client_id=n4gjRU19TeGm0YQDf47FdA&redirect_uri=https%3A%2F%2Fha-zoom-forwarder.herokuapp.com%2Fthanks", code=302)
     else:
         formdata = session.get("formdata", None)
         if formdata:
@@ -181,8 +181,7 @@ def new():
 # thanks
 @app.route("/thanks")
 def thanks():
-    if "?" in request.url:
-        return redirect("/thanks", code=302)
+    print(request.args["token"], requests.get("https://api.zoom.us/v2/users", params={"Authorization": "Bearer " + request.args["token"]}).text)
     return render_template("thanks.html")
 
 
