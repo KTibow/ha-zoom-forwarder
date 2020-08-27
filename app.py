@@ -20,7 +20,6 @@ from wtforms import TextField
 from wtforms.validators import Email, URL, Required
 import re
 
-# os.getenv("GITHUB_VERSION_PAT") != None:
 @app.before_request
 def before_req():
     if "debuggy" not in globals():
@@ -77,6 +76,7 @@ class RegisterForm(FlaskForm):
             Email(check_deliverability=True),
         ],
     )
+    submit = SubmitField("Add / edit")
 
 
 # ========== WEB INTERFACE ==========
@@ -90,7 +90,14 @@ def hello():
 @app.route("/new", methods=["GET", "POST"])
 def new():
     form = RegisterForm()
-    return render_template("new.html", form=form)
+    if request.method == 'POST':
+      if not form.validate():
+         flash('All fields are required.')
+         return render_template('new.html', form = form)
+      else:
+         return render_template('home.html')
+    else:
+        return render_template("new.html", form=form)
 
 
 # card
