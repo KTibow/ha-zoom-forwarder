@@ -16,7 +16,7 @@
 {% block content %}
   <h1>HAZF setup: Home Assistant Zoom Forwarder setup</h1>
   {{ wtf.form_errors(form, hiddens="only") }}
-  <form method="POST" action="/submit">
+  <form method="POST">
     <fieldset>
       <legend>Setup</legend>
       {{ form.hidden_tag() }}
