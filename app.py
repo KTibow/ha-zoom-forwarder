@@ -193,23 +193,38 @@ def new():
 # thanks
 @app.route("/thanks", methods=["GET", "POST"])
 def thanks():
-    args = dict(request.args)
     if "code" in args:
-        token = args["code"]
-        userdata = (
-            requests.post(
-                "https://zoom.us/oauth/token",
-                params={
-                    "grant_type": "authorization_code",
-                    "code": token,
-                    "redirect_uri": "https://ha-zoom-forwarder.herokuapp.com/thanks",
-                },
-                headers={
-                    "Authorization": "Basic "
-                    + base64.b64encode(("n4gjRU19TeGm0YQDf47FdA" + ":" + os.getenv("ZOOM_SECRET")).encode()).decode()
-                },
-            ).json()
-        )
+        token = dict(request.args)["code"]
+        form = RegisterForm(MultiDict({"token": token}))
+        if request.method == "POST":
+            if not form.validate():
+                session["formdata"] = request.form
+                return redirect("/new?code=" + token, code=302)
+            else:
+                userdata = (
+                    requests.post(
+                        "https://zoom.us/oauth/token",
+                        params={
+                            "grant_type": "authorization_code",
+                            "code": token,
+                            "redirect_uri": "https://ha-zoom-forwarder.herokuapp.com/thanks",
+                        },
+                        headers={
+                            "Authorization": "Basic "
+                            + base64.b64encode(("n4gjRU19TeGm0YQDf47FdA" + ":" + os.getenv("ZOOM_SECRET")).encode()).decode()
+                        },
+                    ).json()
+                )
+                print(userdata)
+        else:
+            formdata = session.get("formdata", None)
+            if formdata:
+                form = RegisterForm(MultiDict(formdata))
+                form.validate()
+                session.pop("formdata")
+            return render_template("new.html", form=form)
+        
+        
         # print(requests.get("https://api.zoom.us/v2/users", params={"Authorization": "Bearer " + token}).json())
         return render_template("thanks.html")
     else:
