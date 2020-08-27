@@ -149,13 +149,15 @@ def new():
 # thanks
 @app.route("/thanks")
 def thanks():
+    if "?" in request.url:
+        return redirect("/thanks", code=302)
     return render_template("thanks.html")
 
 
 # webhook
-@app.route("/webhook/<theid>", methods=["GET", "POST"])
+@app.route("/webhookstatus", methods=["POST"])
 def webhook(theid):
-    print(theid, request.method, request)
+    print(theid, request.method, request.data, request.form)
     return ""
 
 
