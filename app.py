@@ -181,7 +181,7 @@ def new():
 # thanks
 @app.route("/thanks")
 def thanks():
-    print(request.args)
+    print(request.form)
     # , requests.get("https://api.zoom.us/v2/users", params={"Authorization": "Bearer " + request.args["token"]}).text
     return render_template("thanks.html")
 
