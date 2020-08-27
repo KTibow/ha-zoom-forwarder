@@ -23,7 +23,7 @@ nav.register_element("top", Navbar("HAZF", View("Home", "hello"), View("New", "n
 nav.init_app(app)
 # Form
 from flask_wtf import FlaskForm
-from wtforms import TextField, SubmitField
+from wtforms import TextField, BooleanField, SubmitField
 from wtforms.validators import Email, URL, DataRequired, InputRequired, ValidationError
 import re
 import requests
