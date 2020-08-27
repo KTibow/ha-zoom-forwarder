@@ -86,7 +86,7 @@ def check_url(form, field):
         res.raise_for_status()
     except Exception as e:
         raise ValidationError("That's an unconnectable URL.")
-    if len(field.data.split("/")) > 3:
+    if len(field.data.split("/")) > 4:
         raise ValidationError("That's not a base URL.")
     elif field.data.count("/") == 2:
         raise ValidationError("That's a URL without a trailing slash.")
