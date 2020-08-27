@@ -21,6 +21,7 @@ from flask_wtf import FlaskForm
 from wtforms import TextField, SubmitField
 from wtforms.validators import Email, URL, Required, ValidationError
 import re
+import requests
 
 
 @app.before_request
