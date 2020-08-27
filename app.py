@@ -198,7 +198,7 @@ def new():
 # thanks
 @app.route("/thanks", methods=["GET", "POST"])
 def thanks():
-    if "code" in args:
+    if "code" in dict(request.args):
         token = dict(request.args)["code"]
         form = RegisterForm(MultiDict({"token": token}))
         if request.method == "POST":
