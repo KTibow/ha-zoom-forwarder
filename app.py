@@ -19,7 +19,6 @@ app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 minify(app=app, html=True, js=True, cssless=True, static=True, caching_limit=0)
 Bootstrap(app)
 nav = Nav()
-nav.init_app(app)
 # Form
 from flask_wtf import FlaskForm
 from wtforms import TextField, SubmitField
@@ -146,9 +145,9 @@ def err500(e):
 
 # navbar
 @nav.navigation()
-def mynavbar():
-    return Navbar(
+nav.register_element('top', Navbar(
         'HAZF',
         View('Home', '/'),
         View('New', '/new'),
-    )
+    ))
+nav.init_app(app)
