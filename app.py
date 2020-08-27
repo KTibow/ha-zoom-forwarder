@@ -15,7 +15,7 @@ app = Flask(__name__, template_folder="files")
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 minify(app=app, html=True, js=True, cssless=True, static=True, caching_limit=0)
 # Form
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from wtforms import TextField
 from wtforms.validators import Email, URL, Required
 import re
@@ -69,7 +69,7 @@ def after_req(response):
 url = re.compile(r"^https?://(?:[A-Z-\.])+(?::\d{1,5})?$", re.IGNORECASE)
 
 
-class RegisterForm(Form):
+class RegisterForm(FlaskForm):
     email = TextField(
         "Zoom account email",
         [
