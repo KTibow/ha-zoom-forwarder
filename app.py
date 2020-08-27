@@ -39,7 +39,16 @@ nav.init_app(app)
 # # Database
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 db = SQLAlchemy(app)
-from models import User
+class User(db.Model):
+    __tablename__ = "users"
+
+    id = db.Column(db.Integer, primary_key=True)
+    url = db.Column(db.String(120), index=True, unique=True)
+    token = db.Column(db.String(120), index=True, unique=True)
+    email = db.Column(db.String(120), index=True, unique=True)
+
+    def __repr__(self):
+        return f"User {self.email}"
 # Form
 from flask_wtf import FlaskForm, RecaptchaField, Recaptcha
 from wtforms import TextField, BooleanField, SubmitField
