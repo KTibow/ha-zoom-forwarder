@@ -139,7 +139,7 @@ def new():
     else:
         formdata = session.get("formdata", None)
         if formdata:
-            form = RegisterForm(MultiDict(formdata))
+            form = RegisterForm(formdata)
             form.validate()
             session.pop("formdata")
         return render_template("new.html", form=form)
