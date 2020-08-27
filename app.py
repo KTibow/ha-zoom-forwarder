@@ -156,8 +156,8 @@ def thanks():
 
 # webhook
 @app.route("/webhookstatus", methods=["POST"])
-def webhook(theid):
-    print(theid, request.method, request.data, request.form)
+def webhook():
+    print(request.method, request.data, request.form)
     return ""
 
 
