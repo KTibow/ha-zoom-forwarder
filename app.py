@@ -16,7 +16,7 @@ app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 minify(app=app, html=True, js=True, cssless=True, static=True, caching_limit=0)
 # Form
 from flask_wtf import FlaskForm
-from wtforms import TextField
+from wtforms import TextField, SubmitField
 from wtforms.validators import Email, URL, Required
 import re
 
