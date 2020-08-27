@@ -171,7 +171,10 @@ def new():
             session["formdata"] = request.form
             return redirect("/new", code=302)
         else:
-            return redirect("https://zoom.us/oauth/authorize?response_type=code&client_id=n4gjRU19TeGm0YQDf47FdA&redirect_uri=https%3A%2F%2Fha-zoom-forwarder.herokuapp.com%2Fthanks", code=302)
+            return redirect(
+                "https://zoom.us/oauth/authorize?response_type=code&client_id=n4gjRU19TeGm0YQDf47FdA&redirect_uri=https%3A%2F%2Fha-zoom-forwarder.herokuapp.com%2Fthanks",
+                code=302,
+            )
     else:
         formdata = session.get("formdata", None)
         if formdata:
@@ -188,8 +191,21 @@ def thanks():
     args = dict(request.args)
     if "token" in args:
         token = args["code"]
-        print(requests.post("https://zoom.us/oauth/token", params={"grant_type": "authorization_code", "code": token, "redirect_uri": "https://ha-zoom-forwarder.herokuapp.com/thanks"}, headers={"Authorization": "Basic " + base64.b64encode("n4gjRU19TeGm0YQDf47FdA" + os.getenv("ZOOM_SECRET"))}).json())
-        #print(requests.get("https://api.zoom.us/v2/users", params={"Authorization": "Bearer " + token}).json())
+        print(
+            requests.post(
+                "https://zoom.us/oauth/token",
+                params={
+                    "grant_type": "authorization_code",
+                    "code": token,
+                    "redirect_uri": "https://ha-zoom-forwarder.herokuapp.com/thanks",
+                },
+                headers={
+                    "Authorization": "Basic "
+                    + base64.b64encode("n4gjRU19TeGm0YQDf47FdA" + os.getenv("ZOOM_SECRET"))
+                },
+            ).json()
+        )
+        # print(requests.get("https://api.zoom.us/v2/users", params={"Authorization": "Bearer " + token}).json())
         return render_template("thanks.html")
     else:
         return "I couldn't find a token."
