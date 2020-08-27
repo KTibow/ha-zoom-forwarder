@@ -161,7 +161,12 @@ class RegisterForm(FlaskForm):
 # redirect to setup
 @app.route("/setup")
 def setup():
-    return redirect("https://zoom.us/oauth/authorize?response_type=code&client_id=n4gjRU19TeGm0YQDf47FdA&redirect_uri=https%3A%2F%2Fha-zoom-forwarder.herokuapp.com%2Fthanks", code=302)
+    return redirect(
+        "https://zoom.us/oauth/authorize?response_type=code&client_id=n4gjRU19TeGm0YQDf47FdA&redirect_uri=https%3A%2F%2Fha-zoom-forwarder.herokuapp.com%2Fthanks",
+        code=302,
+    )
+
+
 # home
 @app.route("/")
 def hello():
@@ -201,20 +206,20 @@ def thanks():
                 session["formdata"] = request.form
                 return redirect("/new?code=" + token, code=302)
             else:
-                userdata = (
-                    requests.post(
-                        "https://zoom.us/oauth/token",
-                        params={
-                            "grant_type": "authorization_code",
-                            "code": token,
-                            "redirect_uri": "https://ha-zoom-forwarder.herokuapp.com/thanks",
-                        },
-                        headers={
-                            "Authorization": "Basic "
-                            + base64.b64encode(("n4gjRU19TeGm0YQDf47FdA" + ":" + os.getenv("ZOOM_SECRET")).encode()).decode()
-                        },
-                    ).json()
-                )
+                userdata = requests.post(
+                    "https://zoom.us/oauth/token",
+                    params={
+                        "grant_type": "authorization_code",
+                        "code": token,
+                        "redirect_uri": "https://ha-zoom-forwarder.herokuapp.com/thanks",
+                    },
+                    headers={
+                        "Authorization": "Basic "
+                        + base64.b64encode(
+                            ("n4gjRU19TeGm0YQDf47FdA" + ":" + os.getenv("ZOOM_SECRET")).encode()
+                        ).decode()
+                    },
+                ).json()
                 print(userdata)
         else:
             formdata = session.get("formdata", None)
@@ -223,8 +228,7 @@ def thanks():
                 form.validate()
                 session.pop("formdata")
             return render_template("new.html", form=form)
-        
-        
+
         # print(requests.get("https://api.zoom.us/v2/users", params={"Authorization": "Bearer " + token}).json())
         return render_template("thanks.html")
     else:
