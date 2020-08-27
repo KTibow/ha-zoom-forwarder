@@ -111,7 +111,10 @@ class RegisterForm(FlaskForm):
     age = BooleanField(
         "I'm >13 (so I have permission to store your email)", validators=[DataRequired()]
     )
-    recaptcha = RecaptchaField("I'm not a robot spammer, or a spammer robot, or a spammer human, or a human spammer", validators=[Recaptcha(message="That's an empty checkbox.")])
+    recaptcha = RecaptchaField(
+        "I'm not a robot spammer, or a spammer robot, or a spammer human, or a human spammer",
+        validators=[Recaptcha(message="That's an empty checkbox.")],
+    )
     submit = SubmitField("Add / edit")
 
 
@@ -128,16 +131,16 @@ def new():
     form = RegisterForm()
     if request.method == "POST":
         if not form.validate():
-            session['formdata'] = request.form
+            session["formdata"] = request.form
             return redirect("/new", code=302)
         else:
             return redirect("/", code=302)
     else:
-        formdata = session.get('formdata', None)
+        formdata = session.get("formdata", None)
         if formdata:
             form = MyForm(MultiDict(formdata))
             form.validate()
-            session.pop('formdata')
+            session.pop("formdata")
         return render_template("new.html", form=form)
 
 
