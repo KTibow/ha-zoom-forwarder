@@ -20,6 +20,12 @@
     <fieldset>
       <legend>Setup</legend>
       {{ form.hidden_tag() }}
+      {{ wtf.form_field(form.url) }}
+      <p>
+        <i>This app gets multiple requests from multiple emails, and will use that email to only send your Zoom events to your Home Assistant.<br>
+        You'll get a confirmation link, so you can't spy on people by entering in their email and your Home Assistant.
+        </i>
+      </p>
       {{ wtf.form_field(form.email) }}
       {{ wtf.form_field(form.submit, button_map={"submit": "primary"}) }}
     </fieldset>
