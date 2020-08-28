@@ -22,6 +22,7 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 import requests
 import random
+import json
 from user_agents import parse as ua_parse
 
 # # Zoom
@@ -274,7 +275,10 @@ def thanks():
 # webhook
 @app.route("/webhookstatus", methods=["POST"])
 def webhook():
-    print(request.method, request.data, request.form)
+    webhookinfo = request.data.decode()
+    webhookinfo = json.loads(webhookinfo)
+    print(webhookinfo)
+    print(request.headers)
     return ""
 
 
