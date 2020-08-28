@@ -268,7 +268,7 @@ def thanks():
                     refresh=tokendata["refresh_token"],
                     email=userdata["email"],
                 )
-                decontaminate()
+                decontaminate(email=userdata["email"])
                 db.session.add(user)
                 db.session.commit()
                 print(tokendata)
