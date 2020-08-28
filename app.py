@@ -166,7 +166,6 @@ class RegisterForm(FlaskForm):
     )
     recaptcha = RecaptchaField(
         "I'm not a robot spammer, or a spammer robot, or a spammer human, or a human spammer",
-        validators=[check_captcha],
     )
     submit = SubmitField("Add / edit")
 
