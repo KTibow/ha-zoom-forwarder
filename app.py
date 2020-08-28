@@ -151,7 +151,6 @@ class RegisterForm(FlaskForm):
         [
             InputRequired("What do you think you're getting away with? Fill in all fields."),
             URL(message="That's an invalid URL."),
-
             check_url,
         ],
     )
