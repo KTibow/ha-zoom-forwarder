@@ -132,9 +132,16 @@ def check_url(form, field):
 
 
 def check_captcha(form, field):
-    res = requests.post('https://www.google.com/recaptcha/api/siteverify',data = {'secret': os.getenv("CAPTCHA_KEY"), 'response': request.form.get('g-recaptcha-response', '')})
-    if not res.json()['success']:
+    res = requests.post(
+        "https://www.google.com/recaptcha/api/siteverify",
+        data={
+            "secret": os.getenv("CAPTCHA_KEY"),
+            "response": request.form.get("g-recaptcha-response", ""),
+        },
+    )
+    if not res.json()["success"]:
         raise ValidationError("That's an unchecked box.")
+
 
 class RegisterForm(FlaskForm):
     url = TextField(
@@ -157,7 +164,7 @@ class RegisterForm(FlaskForm):
     )
     recaptcha = RecaptchaField(
         "I'm not a robot spammer, or a spammer robot, or a spammer human, or a human spammer",
-        validators=[check_captcha]
+        validators=[check_captcha],
     )
     submit = SubmitField("Add / edit")
 
