@@ -54,11 +54,11 @@ db = SQLAlchemy(app)
 class User(db.Model):
     __tablename__ = "users"
 
-    id = db.Column(db.Integer, primary_key=True)
-    url = db.Column(db.String(80), index=True, unique=True)
-    token = db.Column(db.String(642), index=True, unique=True)
-    refresh = db.Column(db.String(642), index=True, unique=True)
-    email = db.Column(db.String(60), index=True, unique=True)
+    id = db.Column('user_id', db.Integer, primary_key=True)
+    url = db.Column(db.String(80))
+    token = db.Column(db.String(642))
+    refresh = db.Column(db.String(642))
+    email = db.Column(db.String(60))
 
     def __repr__(self):
         return f"User {self.email} at {self.url}"
@@ -265,5 +265,5 @@ def err500(e):
         500,
     )
 
-if "DATABASE_URL" in dict(os.environ):
-    db.create_all()
+#if "DATABASE_URL" in dict(os.environ):
+#    db.create_all()
