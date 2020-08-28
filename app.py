@@ -155,13 +155,6 @@ class RegisterForm(FlaskForm):
             check_url,
         ],
     )
-    email = TextField(
-        "Zoom account email",
-        [
-            InputRequired("What do you think you're getting away with? Fill in all fields."),
-            Email(check_deliverability=True, message="That's an invalid email."),
-        ],
-    )
     age = BooleanField(
         "I'm >13 (so I have permission to store your email)", validators=[DataRequired()]
     )
@@ -200,7 +193,6 @@ def thanks():
                 print(form.errors)
                 print("Invalid.")
                 return render_template("new.html", form=form)
-                # return redirect("/thanks?code=" + token, code=302)
             else:
                 userdata = requests.post(
                     "https://zoom.us/oauth/token",
