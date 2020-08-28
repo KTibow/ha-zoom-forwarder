@@ -63,7 +63,10 @@ db = SQLAlchemy(app)
 
 class User(db.Model):
     __tablename__ = "users"
-
+    __mapper_args__ = {
+        'confirm_deleted_rows': False
+    }
+    
     id = db.Column("user_id", db.Integer, primary_key=True)
     url = db.Column(db.String(80))
     token = db.Column(db.String(642))
