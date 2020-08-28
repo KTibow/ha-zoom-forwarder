@@ -67,8 +67,8 @@ class User(db.Model):
 
     id = db.Column("user_id", db.Integer, primary_key=True)
     url = db.Column(db.String(80))
-    token = db.Column(db.String(642))
-    refresh = db.Column(db.String(642))
+    token = db.Column(db.String(1000))
+    refresh = db.Column(db.String(1000))
     email = db.Column(db.String(60), unique=True)
 
     def __repr__(self):
