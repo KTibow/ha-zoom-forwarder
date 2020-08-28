@@ -265,5 +265,5 @@ def err500(e):
         500,
     )
 
-
-db.create_all()
+if "DATABASE_URL" in dict(os.environ):
+    db.create_all()
