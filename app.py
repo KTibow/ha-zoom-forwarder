@@ -1,6 +1,6 @@
 # ============== INIT ==============
 # Flask
-from flask import Flask, request, flash, redirect, render_template, g, session
+from flask import Flask, request, flash, redirect, render_template, g
 
 # # Forms
 from werkzeug.datastructures import MultiDict
@@ -196,8 +196,6 @@ def thanks():
         if request.method == "POST":
             if not form.validate():
                 print(request.form)
-                formdata = dict(request.form)
-                session["formdata"] = MultiDict(formdata)
                 print("Invalid.")
                 return render_template("new.html", form=form)
                 #return redirect("/thanks?code=" + token, code=302)
@@ -219,12 +217,6 @@ def thanks():
                 print(userdata)
                 return "It works!"
         else:
-            formdata = session.get("formdata", None)
-            if formdata:
-                print(formdata)
-                form = RegisterForm(MultiDict(formdata))
-                form.validate()
-                session.pop("formdata")
             return render_template("new.html", form=form)
         # print(requests.get("https://api.zoom.us/v2/users", params={"Authorization": "Bearer " + token}).json())
     else:
