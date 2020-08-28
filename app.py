@@ -197,7 +197,6 @@ def thanks():
             if not form.validate():
                 print(request.form)
                 formdata = dict(request.form)
-                formdata.pop("g-recaptcha-response")
                 session["formdata"] = MultiDict(formdata)
                 print("Invalid.")
                 return redirect("/thanks?code=" + token, code=302)
