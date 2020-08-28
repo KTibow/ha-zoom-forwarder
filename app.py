@@ -36,6 +36,7 @@ app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 app.config["RECAPTCHA_USE_SSL"] = True
 app.config["RECAPTCHA_PUBLIC_KEY"] = "6LfkR8QZAAAAAGURj6SFH7ZHulQz9HKLiMqI1Sxi"
 app.config["RECAPTCHA_PRIVATE_KEY"] = os.getenv("CAPTCHA_KEY")
+print(app.config["RECAPTCHA_PRIVATE_KEY"])
 app.config["RECAPTCHA_DATA_ATTRS"] = {"theme": "dark"}
 # # Minify
 minify(app=app, html=True, js=True, cssless=True, static=True, caching_limit=0)
