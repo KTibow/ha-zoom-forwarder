@@ -34,7 +34,7 @@ app = Flask(__name__, template_folder="files")
 # # Forms
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 app.config["RECAPTCHA_USE_SSL"] = True
-app.config["RECAPTCHA_PUBLIC_KEY"] = "6LeRD8QZAAAAANbqikR8ic0Vdg5ckUftWCmxy4B7"
+app.config["RECAPTCHA_PUBLIC_KEY"] = "6LfkR8QZAAAAAGURj6SFH7ZHulQz9HKLiMqI1Sxi"
 app.config["RECAPTCHA_PRIVATE_KEY"] = os.getenv("CAPTCHA_KEY")
 app.config["RECAPTCHA_DATA_ATTRS"] = {"theme": "dark"}
 # # Minify
