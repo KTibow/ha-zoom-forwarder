@@ -54,7 +54,7 @@ db = SQLAlchemy(app)
 class User(db.Model):
     __tablename__ = "users"
 
-    id = db.Column('user_id', db.Integer, primary_key=True)
+    id = db.Column("user_id", db.Integer, primary_key=True)
     url = db.Column(db.String(80))
     token = db.Column(db.String(642))
     refresh = db.Column(db.String(642))
@@ -265,5 +265,6 @@ def err500(e):
         500,
     )
 
-#if "DATABASE_URL" in dict(os.environ):
+
+# if "DATABASE_URL" in dict(os.environ):
 #    db.create_all()
