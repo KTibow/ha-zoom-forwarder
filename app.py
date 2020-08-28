@@ -173,26 +173,6 @@ def hello():
     return render_template("home.html")
 
 
-# new
-@app.route("/new", methods=["GET", "POST"])
-def new():
-    form = RegisterForm()
-    if request.method == "POST":
-        if not form.validate():
-            session["formdata"] = request.form
-            return redirect("/new", code=302)
-        else:
-            return redirect(
-                "https://zoom.us/oauth/authorize?response_type=code&client_id=n4gjRU19TeGm0YQDf47FdA&redirect_uri=https%3A%2F%2Fha-zoom-forwarder.herokuapp.com%2Fthanks",
-                code=302,
-            )
-    else:
-        formdata = session.get("formdata", None)
-        if formdata:
-            form = RegisterForm(MultiDict(formdata))
-            form.validate()
-            session.pop("formdata")
-        return render_template("new.html", form=form)
 
 
 # thanks
@@ -205,7 +185,7 @@ def thanks():
             if not form.validate():
                 session["formdata"] = request.form
                 print("Invalid.")
-                return redirect("/new?code=" + token, code=302)
+                return redirect("/thanks?code=" + token, code=302)
             else:
                 userdata = requests.post(
                     "https://zoom.us/oauth/token",
