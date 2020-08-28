@@ -21,12 +21,13 @@ from flask_sqlalchemy import SQLAlchemy
 # # Zoom
 import base64
 import threading
+
 appauth = {
-                        "Authorization": "Basic "
-                        + base64.b64encode(
-                            ("n4gjRU19TeGm0YQDf47FdA" + ":" + os.getenv("ZOOM_SECRET")).encode()
-                        ).decode()
-                    }
+    "Authorization": "Basic "
+    + base64.b64encode(
+        ("n4gjRU19TeGm0YQDf47FdA" + ":" + os.getenv("ZOOM_SECRET")).encode()
+    ).decode()
+}
 
 # Various
 import os
@@ -69,6 +70,8 @@ class User(db.Model):
 
     def __repr__(self):
         return f"User {self.email} at {self.url}"
+
+
 def decontaminate():
     users = User.query.all()
     users.reverse()
@@ -88,14 +91,16 @@ def stuffcycle():
         decontaminate()
         for user in User.query.all():
             tokendata = requests.post(
-                    "https://zoom.us/oauth/token",
-                    params={
-                        "grant_type": "refresh_token",
-                        "refresh_token": user.refresh,
-                    },
-                    headers=appauth,
-                ).json()
-            newuser = User(url=user.url, token=tokendata["access_token"], refresh=tokendata["refresh_token"], email=user.email)
+                "https://zoom.us/oauth/token",
+                params={"grant_type": "refresh_token", "refresh_token": user.refresh,},
+                headers=appauth,
+            ).json()
+            newuser = User(
+                url=user.url,
+                token=tokendata["access_token"],
+                refresh=tokendata["refresh_token"],
+                email=user.email,
+            )
             db.session.add(newuser)
             db.session.delete(user)
         sleep(random.randint(1080, 1320))
@@ -213,7 +218,7 @@ def setup():
     return redirect(
         "https://zoom.us/oauth/authorize?response_type=code&client_id=n4gjRU19TeGm0YQDf47FdA&redirect_uri=https%3A%2F%2Fha-zoom-forwarder.herokuapp.com%2Fthanks",
         code=302,
-        Response='<div style="font: 2em ui-font;">Taking you to Zoom...</div>'
+        Response='<div style="font: 2em ui-font;">Taking you to Zoom...</div>',
     )
 
 
@@ -288,4 +293,3 @@ def err500(e):
         "500: There's a bug! But don't worry, it's inside Heroku, not you. It'll probably soon get fixed.",
         500,
     )
-
