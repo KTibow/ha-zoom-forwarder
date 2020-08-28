@@ -24,6 +24,7 @@ import threading
 
 # Various
 import os
+import requests
 from user_agents import parse as ua_parse
 
 # Timing
@@ -79,7 +80,6 @@ from flask_wtf import FlaskForm, RecaptchaField, Recaptcha
 from wtforms import TextField, BooleanField, SubmitField
 from wtforms.validators import Email, URL, DataRequired, InputRequired, ValidationError
 import re
-import requests
 
 
 @app.before_request
