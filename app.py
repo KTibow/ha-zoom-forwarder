@@ -36,7 +36,6 @@ app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 app.config["RECAPTCHA_USE_SSL"] = True
 app.config["RECAPTCHA_PUBLIC_KEY"] = "6LfkR8QZAAAAAGURj6SFH7ZHulQz9HKLiMqI1Sxi"
 app.config["RECAPTCHA_PRIVATE_KEY"] = os.getenv("CAPTCHA_KEY")
-print(app.config["RECAPTCHA_PRIVATE_KEY"])
 app.config["RECAPTCHA_DATA_ATTRS"] = {"theme": "dark"}
 # # Minify
 minify(app=app, html=True, js=True, cssless=True, static=True, caching_limit=0)
@@ -132,6 +131,11 @@ def check_url(form, field):
         raise ValidationError("That's a URL without a trailing slash.")
 
 
+def check_captcha(form, field):
+    res = requests.post('https://www.google.com/recaptcha/api/siteverify',data = {'secret': os.getenv("CAPTCHA_KEY"), 'response': request.form.get('g-recaptcha-response', '')})
+    if not res.json()['success']:
+        raise ValidationError("That's an unchecked box.")
+
 class RegisterForm(FlaskForm):
     url = TextField(
         "Home Assistant URL",
@@ -153,6 +157,7 @@ class RegisterForm(FlaskForm):
     )
     recaptcha = RecaptchaField(
         "I'm not a robot spammer, or a spammer robot, or a spammer human, or a human spammer",
+        validators=[check_captcha]
     )
     submit = SubmitField("Add / edit")
 
