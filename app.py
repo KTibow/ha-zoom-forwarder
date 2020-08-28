@@ -31,7 +31,7 @@ import threading
 appauth = {
     "Authorization": "Basic "
     + base64.b64encode(
-        ("n4gjRU19TeGm0YQDf47FdA" + ":" + os.getenv("ZOOM_SECRET")).encode()
+        ("n4gjRU19TeGm0YQDf47FdA" + ":" + os.getenv("ZOOM_SECRET", "")).encode()
     ).decode()
 }
 
