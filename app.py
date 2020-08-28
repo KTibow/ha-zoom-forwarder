@@ -94,10 +94,11 @@ def decontaminate(email=None):
 
 # Continous cycle
 def stuffcycle():
-    sleep(random.random() * 10.0)
     while True:
         requests.get("https://ha-zoom-forwarder.herokuapp.com/")
         decontaminate()
+        sleep(random.random() * 10.0)
+        changed = False
         for user in User.query.all():
             print(user, user.refresh)
             tokendata = requests.post(
@@ -114,8 +115,11 @@ def stuffcycle():
                     email=user.email,
                 )
                 db.session.add(newuser)
+                changed = True
             db.session.delete(user)
-        sleep(random.randint(900, 1100))
+        if changed:
+            db.session.commit()
+        sleep(random.randint(490, 690))
 
 
 # Start async stuff
