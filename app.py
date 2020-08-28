@@ -273,8 +273,6 @@ def thanks():
                 decontaminate(email=userdata["email"])
                 db.session.add(user)
                 db.session.commit()
-                print(tokendata)
-                print(User.query.all())
                 return "It works!"
         else:
             return render_template("new.html", form=form)
@@ -290,7 +288,8 @@ def webhook():
     if request.headers["Authorization"] == os.environ.get("ZOOM_VERIFY") and webhook_info[
         "payload"
     ]["object"]["email"] in [user.email for user in User.query.all()]:
-        print(webhook_info)
+        users = {user.email: user for user in User.query.all()}
+        #requests.get("/api/webhook/" + webhook_info["payload"]["object"])
     else:
         print("Invalid:", webhook_info)
     return ""
