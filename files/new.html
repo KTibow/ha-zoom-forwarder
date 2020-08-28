@@ -39,14 +39,11 @@
   <h1>HAZF setup: Home Assistant Zoom Forwarder setup</h1>
   {{ wtf.form_errors(form, hiddens="only") }}
   <form method="POST">
-    <fieldset>
-      <legend>Setup</legend>
-      {{ form.hidden_tag() }}
-      {{ wtf.form_field(form.url) }}
-      <i>Used for forwarding requests</i>
-      {{ wtf.form_field(form.age) }}
-      {{ wtf.form_field(form.recaptcha) }}
-      {{ wtf.form_field(form.submit, button_map={"submit": "primary"}) }}
-    </fieldset>
+    {{ form.hidden_tag() }}
+    {{ wtf.form_field(form.url) }}
+    {{ wtf.form_field(form.webhook) }}
+    {{ wtf.form_field(form.age) }}
+    {{ wtf.form_field(form.recaptcha) }}
+    {{ wtf.form_field(form.submit, button_map={"submit": "primary"}) }}
   </form>
 {% endblock %}
