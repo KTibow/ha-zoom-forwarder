@@ -279,7 +279,9 @@ def thanks():
 def webhook():
     webhook_info = request.data.decode()
     webhook_info = json.loads(webhook_info)
-    if request.headers["Authorization"] == os.environ.get("ZOOM_VERIFY") and webhook_info["payload"]["object"]["email"] in [user.email for user in User.query.all()]:
+    if request.headers["Authorization"] == os.environ.get("ZOOM_VERIFY") and webhook_info[
+        "payload"
+    ]["object"]["email"] in [user.email for user in User.query.all()]:
         print(webhook_info)
     else:
         print("Invalid:", webhook_info)
