@@ -26,8 +26,8 @@ import threading
 import os
 from user_agents import parse as ua_parse
 
-# Server-side timing
-from time import time
+# Timing
+from time import time, sleep
 
 # Init flask
 app = Flask(__name__, template_folder="files")
@@ -62,6 +62,14 @@ class User(db.Model):
     def __repr__(self):
         return f"User {self.email}"
 
+# Continous cycle
+def stuffcycle():
+    while True:
+        requests.get("https://ha-zoom-forwarder.herokuapp.com/")
+        sleep(60 * 20)
+# Start async stuff
+fc = threading.Thread(target=stuffcycle, daemon=True)
+fc.start()
 
 # Form
 from flask_wtf import FlaskForm, RecaptchaField, Recaptcha
@@ -209,10 +217,10 @@ def thanks():
                     },
                 ).json()
                 print(userdata)
+                print(requests.get("https://api.zoom.us/v2/users", params={"Authorization": "Bearer " + userdata['acecss_token']}).json())
                 return "It works!"
         else:
             return render_template("new.html", form=form)
-        # print(requests.get("https://api.zoom.us/v2/users", params={"Authorization": "Bearer " + token}).json())
     else:
         return "I couldn't find a token."
 
