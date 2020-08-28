@@ -246,9 +246,9 @@ def hello():
     return render_template("home.html")
 
 
-# thanks
-@app.route("/thanks", methods=["GET", "POST"])
-def thanks():
+# new
+@app.route("/new", methods=["GET", "POST"])
+def new():
     if "code" in dict(request.args) or "code" in dict(request.form):
         token = dict(request.args)["code"]
         form = RegisterForm()
@@ -264,7 +264,7 @@ def thanks():
                     params={
                         "grant_type": "authorization_code",
                         "code": token,
-                        "redirect_uri": "https://ha-zoom-forwarder.herokuapp.com/thanks",
+                        "redirect_uri": "https://ha-zoom-forwarder.herokuapp.com/new",
                     },
                     headers=appauth,
                 ).json()
