@@ -97,7 +97,7 @@ def stuffcycle():
             print(user, user.refresh)
             tokendata = requests.post(
                 "https://zoom.us/oauth/token",
-                params={"grant_type": "refresh_token", "refresh_token": user.refresh,},
+                params={"grant_type": "refresh_token", "refresh_token": user.refresh},
                 headers=appauth,
             ).json()
             print(tokendata)
@@ -266,6 +266,7 @@ def thanks():
                 db.session.add(user)
                 db.session.commit()
                 decontaminate()
+                print(tokendata)
                 print(User.query.all())
                 return "It works!"
         else:
