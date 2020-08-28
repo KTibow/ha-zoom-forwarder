@@ -198,7 +198,7 @@ def thanks():
                 print(request.form)
                 print("Invalid.")
                 return render_template("new.html", form=form)
-                #return redirect("/thanks?code=" + token, code=302)
+                # return redirect("/thanks?code=" + token, code=302)
             else:
                 userdata = requests.post(
                     "https://zoom.us/oauth/token",
