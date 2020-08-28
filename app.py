@@ -62,11 +62,14 @@ class User(db.Model):
     def __repr__(self):
         return f"User {self.email}"
 
+
 # Continous cycle
 def stuffcycle():
     while True:
         requests.get("https://ha-zoom-forwarder.herokuapp.com/")
         sleep(60 * 20)
+
+
 # Start async stuff
 fc = threading.Thread(target=stuffcycle, daemon=True)
 fc.start()
@@ -217,7 +220,12 @@ def thanks():
                     },
                 ).json()
                 print(userdata)
-                print(requests.get("https://api.zoom.us/v2/users", params={"Authorization": "Bearer " + userdata['acecss_token']}).json())
+                print(
+                    requests.get(
+                        "https://api.zoom.us/v2/users",
+                        params={"Authorization": "Bearer " + userdata["acecss_token"]},
+                    ).json()
+                )
                 return "It works!"
         else:
             return render_template("new.html", form=form)
