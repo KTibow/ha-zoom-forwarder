@@ -277,10 +277,12 @@ def thanks():
 # webhook
 @app.route("/webhookstatus", methods=["POST"])
 def webhook():
-    webhookinfo = request.data.decode()
-    webhookinfo = json.loads(webhookinfo)
-    print(webhookinfo)
-    print(request.headers)
+    webhook_info = request.data.decode()
+    webhook_info = json.loads(webhook_info)
+    if request.headers["Authorization"] == os.environ.get("ZOOM_VERIFY") and webhook_info["payload"]["object"]["email"] in [user.email for user in User.query.all()]:
+        print(webhook_info)
+    else:
+        print("Invalid:", webhook_info)
     return ""
 
 
