@@ -264,3 +264,4 @@ def err500(e):
         "500: There's a bug! But don't worry, it's inside Heroku, not you. It'll probably soon get fixed.",
         500,
     )
+db.create_all()
