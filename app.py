@@ -183,6 +183,7 @@ def thanks():
             if not form.validate():
                 print(request.form)
                 session["formdata"] = request.form
+                session["formdata"].remove("g-recaptcha-response")
                 print("Invalid.")
                 return redirect("/thanks?code=" + token, code=302)
             else:
