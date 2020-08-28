@@ -61,7 +61,7 @@ class User(db.Model):
     email = db.Column(db.String(120), index=True, unique=True)
 
     def __repr__(self):
-        return f"User {self.email}"
+        return f"User {self.email} at {self.url}"
 
 
 # Continous cycle
@@ -225,12 +225,16 @@ def thanks():
                     headers={"Authorization": "Bearer " + tokendata["access_token"]},
                 ).json()["users"][0]
                 print(userdata)
-                print(
-                    request.form["url"],
-                    tokendata["access_token"],
-                    tokendata["refresh_token"],
-                    userdata["email"],
+                user = User(
+                    url=request.form["url"],
+                    token=tokendata["access_token"],
+                    refresh=tokendata["refresh_token"],
+                    email=userdata["email"],
                 )
+                print(user)
+                db.session.add(user)
+                db.session.commit()
+                print(User.query.all())
                 return "It works!"
         else:
             return render_template("new.html", form=form)
