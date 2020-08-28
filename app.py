@@ -182,8 +182,9 @@ def thanks():
         if request.method == "POST":
             if not form.validate():
                 print(request.form)
-                session["formdata"] = request.form
-                session["formdata"].remove("g-recaptcha-response")
+                formdata = request.form
+                formdata.remove("g-recaptcha-response")
+                session["formdata"] = formdata
                 print("Invalid.")
                 return redirect("/thanks?code=" + token, code=302)
             else:
