@@ -219,19 +219,16 @@ def thanks():
                         ).decode()
                     },
                 ).json()
-                print(tokendata)
                 userdata = requests.get(
                     "https://api.zoom.us/v2/users",
                     headers={"Authorization": "Bearer " + tokendata["access_token"]},
                 ).json()["users"][0]
-                print(userdata)
                 user = User(
                     url=request.form["url"],
                     token=tokendata["access_token"],
                     refresh=tokendata["refresh_token"],
                     email=userdata["email"],
                 )
-                print(user)
                 db.session.add(user)
                 db.session.commit()
                 users = User.query.all().copy()
@@ -243,6 +240,7 @@ def thanks():
                     else:
                         db.session.delete(auser)
                 db.session.commit()
+                print(User.query.all())
                 return "It works!"
         else:
             return render_template("new.html", form=form)
