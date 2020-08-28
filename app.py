@@ -234,7 +234,15 @@ def thanks():
                 print(user)
                 db.session.add(user)
                 db.session.commit()
-                print(User.query.all())
+                users = User.query.all().copy()
+                users.reverse()
+                emails = []
+                for auser in users:
+                    if auser.email not in emails:
+                        emails.append(auser.email)
+                    else:
+                        db.session.delete(auser)
+                db.session.commit()
                 return "It works!"
         else:
             return render_template("new.html", form=form)
