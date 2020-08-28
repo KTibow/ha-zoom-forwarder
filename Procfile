@@ -1,2 +1,2 @@
 web: gunicorn app:app
-database: python manage.py db init; python manage.py db migrate; python manage.py db upgrade
+database: python manage.py db init; python manage.py db migrate; python manage.py db upgrade; sleep infinity
