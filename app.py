@@ -199,7 +199,8 @@ def thanks():
                 formdata = dict(request.form)
                 session["formdata"] = MultiDict(formdata)
                 print("Invalid.")
-                return redirect("/thanks?code=" + token, code=302)
+                return render_template("new.html", form=form)
+                #return redirect("/thanks?code=" + token, code=302)
             else:
                 userdata = requests.post(
                     "https://zoom.us/oauth/token",
