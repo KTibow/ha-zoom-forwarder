@@ -95,18 +95,16 @@ def decontaminate(email=None):
 # Continous cycle
 def stuffcycle():
     while True:
-        requests.get("https://ha-zoom-forwarder.herokuapp.com/")
+        #requests.get("https://ha-zoom-forwarder.herokuapp.com/")
         decontaminate()
         sleep(random.random() * 10.0)
         changed = False
         for user in User.query.all():
-            print(user, user.refresh)
             tokendata = requests.post(
                 "https://zoom.us/oauth/token",
                 params={"grant_type": "refresh_token", "refresh_token": user.refresh},
                 headers=appauth,
             ).json()
-            print(tokendata)
             if "access_token" in tokendata and "refresh_token" in tokendata:
                 newuser = User(
                     url=user.url,
@@ -116,6 +114,7 @@ def stuffcycle():
                 )
                 db.session.add(newuser)
                 changed = True
+                print("Refreshed", newuser)
             db.session.delete(user)
         if changed:
             db.session.commit()
