@@ -209,7 +209,7 @@ def check_captcha(form, field):
 
 class RegisterForm(FlaskForm):
     url = TextField(
-        "Home Assistant URL",
+        "Home Assistant URL (to send webhook to)",
         [
             InputRequired("What do you think you're getting away with? Fill in all fields."),
             URL(message="That's an invalid URL."),
