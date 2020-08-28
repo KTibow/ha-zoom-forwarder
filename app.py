@@ -223,7 +223,7 @@ def thanks():
                 print(
                     requests.get(
                         "https://api.zoom.us/v2/users",
-                        params={"Authorization": "Bearer " + userdata["acecss_token"]},
+                        params={"Authorization": "Bearer " + userdata["access_token"]},
                     ).json()
                 )
                 return "It works!"
