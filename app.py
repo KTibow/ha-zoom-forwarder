@@ -173,8 +173,6 @@ def hello():
     return render_template("home.html")
 
 
-
-
 # thanks
 @app.route("/thanks", methods=["GET", "POST"])
 def thanks():
