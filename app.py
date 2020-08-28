@@ -220,7 +220,7 @@ class RegisterForm(FlaskForm):
         "Webhook ID",
         [
             InputRequired("What do you think you're getting away with? Fill in all fields."),
-            Length(min=10, "You don't want a hacker to guess your webhook, do you?"),
+            Length(min=10, message="You don't want a hacker to guess your webhook, do you?"),
         ],
     )
     age = BooleanField(
