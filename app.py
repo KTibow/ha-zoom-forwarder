@@ -93,6 +93,7 @@ def stuffcycle():
         requests.get("https://ha-zoom-forwarder.herokuapp.com/")
         decontaminate()
         for user in User.query.all():
+            print(user, user.refresh)
             tokendata = requests.post(
                 "https://zoom.us/oauth/token",
                 params={"grant_type": "refresh_token", "refresh_token": user.refresh,},
