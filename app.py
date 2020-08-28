@@ -197,6 +197,7 @@ def thanks():
         if request.method == "POST":
             if not form.validate():
                 print(request.form)
+                print(form.errors)
                 print("Invalid.")
                 return render_template("new.html", form=form)
                 # return redirect("/thanks?code=" + token, code=302)
