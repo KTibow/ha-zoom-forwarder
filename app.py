@@ -94,7 +94,7 @@ def decontaminate(email=None):
 
 # Continous cycle
 def stuffcycle():
-    sleep(random.random() * 5.0)
+    sleep(random.random() * 10.0)
     while True:
         requests.get("https://ha-zoom-forwarder.herokuapp.com/")
         decontaminate()
