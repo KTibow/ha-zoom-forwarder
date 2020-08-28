@@ -94,7 +94,7 @@ def decontaminate(email=None):
 
 # Continous cycle
 def stuffcycle():
-    sleep(random.random())
+    sleep(random.random() * 5.0)
     while True:
         requests.get("https://ha-zoom-forwarder.herokuapp.com/")
         decontaminate()
@@ -198,7 +198,6 @@ def check_captcha(form, field):
             "remoteip": request.headers["X-Forwarded-For"],
         },
     )
-    print(res.json())
     if not res.json()["success"]:
         print("Invalid recaptcha.")
         raise ValidationError("That's an unchecked box.")
