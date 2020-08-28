@@ -139,6 +139,7 @@ def check_captcha(form, field):
             "response": request.form.get("g-recaptcha-response", ""),
         },
     )
+    print(res)
     if not res.json()["success"]:
         raise ValidationError("That's an unchecked box.")
 
