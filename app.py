@@ -219,11 +219,7 @@ class RegisterForm(FlaskForm):
 # redirect to setup
 @app.route("/setup")
 def setup():
-    return redirect(
-        "https://zoom.us/oauth/authorize?response_type=code&client_id=n4gjRU19TeGm0YQDf47FdA&redirect_uri=https%3A%2F%2Fha-zoom-forwarder.herokuapp.com%2Fthanks",
-        code=302,
-        Response=make_response('<div style="font: 2em ui-font;">Taking you to Zoom...</div>'),
-    )
+    return render_template("setup.html")
 
 
 # home
