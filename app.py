@@ -180,6 +180,7 @@ def thanks():
         form = RegisterForm()
         if request.method == "POST":
             if not form.validate():
+                print(request.form)
                 session["formdata"] = request.form
                 print("Invalid.")
                 return redirect("/thanks?code=" + token, code=302)
@@ -203,6 +204,7 @@ def thanks():
         else:
             formdata = session.get("formdata", None)
             if formdata:
+                print(formdata)
                 form = RegisterForm(MultiDict(formdata))
                 form.validate()
                 session.pop("formdata")
