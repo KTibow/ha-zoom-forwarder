@@ -137,9 +137,10 @@ def check_captcha(form, field):
         data={
             "secret": os.getenv("CAPTCHA_KEY"),
             "response": request.form.get("g-recaptcha-response", ""),
+            "remoteip": request.headers["X-Forwarded-For"],
         },
     )
-    print(res)
+    print(res.json())
     if not res.json()["success"]:
         raise ValidationError("That's an unchecked box.")
 
@@ -150,6 +151,7 @@ class RegisterForm(FlaskForm):
         [
             InputRequired("What do you think you're getting away with? Fill in all fields."),
             URL(message="That's an invalid URL."),
+
             check_url,
         ],
     )
