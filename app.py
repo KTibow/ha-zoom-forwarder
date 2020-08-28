@@ -58,7 +58,7 @@ class User(db.Model):
     url = db.Column(db.String(80))
     token = db.Column(db.String(642))
     refresh = db.Column(db.String(642))
-    email = db.Column(db.String(60))
+    email = db.Column(db.String(60), unique=True)
 
     def __repr__(self):
         return f"User {self.email} at {self.url}"
