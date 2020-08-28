@@ -96,6 +96,7 @@ def stuffcycle():
                 params={"grant_type": "refresh_token", "refresh_token": user.refresh,},
                 headers=appauth,
             ).json()
+            print(tokendata)
             newuser = User(
                 url=user.url,
                 token=tokendata["access_token"],
