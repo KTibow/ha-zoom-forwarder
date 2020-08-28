@@ -222,7 +222,7 @@ def thanks():
                 print(tokendata)
                 userdata = requests.get(
                     "https://api.zoom.us/v2/users",
-                    headers={"Authorization": "Bearer " + userdata["access_token"]},
+                    headers={"Authorization": "Bearer " + tokendata["access_token"]},
                 ).json()["users"][0]
                 print(userdata)
                 print(
