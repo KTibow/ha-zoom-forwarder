@@ -152,7 +152,6 @@ class RegisterForm(FlaskForm):
     )
     recaptcha = RecaptchaField(
         "I'm not a robot spammer, or a spammer robot, or a spammer human, or a human spammer",
-        validators=[Recaptcha(message="That's an empty checkbox.")],
     )
     submit = SubmitField("Add / edit")
 
