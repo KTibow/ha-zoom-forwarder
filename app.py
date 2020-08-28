@@ -205,7 +205,7 @@ def thanks():
                 print("Invalid.")
                 return render_template("new.html", form=form)
             else:
-                userdata = requests.post(
+                tokendata = requests.post(
                     "https://zoom.us/oauth/token",
                     params={
                         "grant_type": "authorization_code",
@@ -219,13 +219,15 @@ def thanks():
                         ).decode()
                     },
                 ).json()
-                print(userdata)
-                print(
+                print(tokendata)
+                userdata = (
                     requests.get(
                         "https://api.zoom.us/v2/users",
                         headers={"Authorization": "Bearer " + userdata["access_token"]},
-                    ).json()
+                    ).json()["users"][0]
                 )
+                print(userdata)
+                print(request.form['url'], tokendata['access_token'], tokendata['refresh_token'], userdata['email'])
                 return "It works!"
         else:
             return render_template("new.html", form=form)
