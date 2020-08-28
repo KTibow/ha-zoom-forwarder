@@ -220,14 +220,17 @@ def thanks():
                     },
                 ).json()
                 print(tokendata)
-                userdata = (
-                    requests.get(
-                        "https://api.zoom.us/v2/users",
-                        headers={"Authorization": "Bearer " + userdata["access_token"]},
-                    ).json()["users"][0]
-                )
+                userdata = requests.get(
+                    "https://api.zoom.us/v2/users",
+                    headers={"Authorization": "Bearer " + userdata["access_token"]},
+                ).json()["users"][0]
                 print(userdata)
-                print(request.form['url'], tokendata['access_token'], tokendata['refresh_token'], userdata['email'])
+                print(
+                    request.form["url"],
+                    tokendata["access_token"],
+                    tokendata["refresh_token"],
+                    userdata["email"],
+                )
                 return "It works!"
         else:
             return render_template("new.html", form=form)
