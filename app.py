@@ -1,6 +1,6 @@
 # ============== INIT ==============
 # Flask
-from flask import Flask, Response, request, flash, redirect, render_template, g
+from flask import Flask, make_response, request, flash, redirect, render_template, g
 
 # # Forms
 from werkzeug.datastructures import MultiDict
@@ -220,7 +220,7 @@ def setup():
     return redirect(
         "https://zoom.us/oauth/authorize?response_type=code&client_id=n4gjRU19TeGm0YQDf47FdA&redirect_uri=https%3A%2F%2Fha-zoom-forwarder.herokuapp.com%2Fthanks",
         code=302,
-        Response=Response('<div style="font: 2em ui-font;">Taking you to Zoom...</div>'),
+        Response=make_response('<div style="font: 2em ui-font;">Taking you to Zoom...</div>'),
     )
 
 
