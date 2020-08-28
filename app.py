@@ -87,6 +87,7 @@ def decontaminate():
 
 # Continous cycle
 def stuffcycle():
+    sleep(random.random())
     while True:
         requests.get("https://ha-zoom-forwarder.herokuapp.com/")
         decontaminate()
@@ -106,7 +107,7 @@ def stuffcycle():
                 )
                 db.session.add(newuser)
             db.session.delete(user)
-        sleep(random.randint(1080, 1320))
+        sleep(random.randint(900, 1100))
 
 
 # Start async stuff
