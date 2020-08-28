@@ -75,12 +75,17 @@ class User(db.Model):
         return f"User {self.email} at {self.url}"
 
 
-def decontaminate():
+def decontaminate(email=None):
     users = User.query.all()
     users.reverse()
     emails = []
     for auser in users:
-        if auser.email not in emails:
+        works = False
+        if email is None:
+            works = auser.email not in emails
+        else:
+            works = auser.email != email
+        if works:
             emails.append(auser.email)
         else:
             db.session.delete(auser)
@@ -263,9 +268,9 @@ def thanks():
                     refresh=tokendata["refresh_token"],
                     email=userdata["email"],
                 )
+                decontaminate()
                 db.session.add(user)
                 db.session.commit()
-                decontaminate()
                 print(tokendata)
                 print(User.query.all())
                 return "It works!"
@@ -280,9 +285,9 @@ def thanks():
 def webhook():
     webhook_info = request.data.decode()
     webhook_info = json.loads(webhook_info)
-    if request.headers["Authorization"] == os.environ.get("ZOOM_VERIFY") and webhook_info[
-        "payload"
-    ]["object"]["email"] in [user.email for user in User.query.all()]:
+    if (request.headers["Authorization"] ==
+        os.environ.get("ZOOM_VERIFY") and webhook_info["payload"]["object"]["email"] in
+        [user.email for user in User.query.all()]):
         print(webhook_info)
     else:
         print("Invalid:", webhook_info)
