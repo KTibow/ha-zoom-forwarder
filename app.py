@@ -97,13 +97,14 @@ def stuffcycle():
                 headers=appauth,
             ).json()
             print(tokendata)
-            newuser = User(
-                url=user.url,
-                token=tokendata["access_token"],
-                refresh=tokendata["refresh_token"],
-                email=user.email,
-            )
-            db.session.add(newuser)
+            if "access_token" in tokendata and "refresh_token" in tokendata:
+                newuser = User(
+                    url=user.url,
+                    token=tokendata["access_token"],
+                    refresh=tokendata["refresh_token"],
+                    email=user.email,
+                )
+                db.session.add(newuser)
             db.session.delete(user)
         sleep(random.randint(1080, 1320))
 
