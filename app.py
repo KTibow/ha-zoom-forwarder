@@ -132,12 +132,6 @@ def check_url(form, field):
 
 
 class RegisterForm(FlaskForm):
-    token = TextField(
-        "Zoom token (auto-generated)",
-        [
-            InputRequired("Zoom token not found."),
-        ],
-    )
     url = TextField(
         "Home Assistant URL",
         [
@@ -204,9 +198,9 @@ def new():
 # thanks
 @app.route("/thanks", methods=["GET", "POST"])
 def thanks():
-    if "code" in dict(request.args):
+    if "code" in dict(request.args) or "code" in dict(request.form):
         token = dict(request.args)["code"]
-        form = RegisterForm(MultiDict({"token": token}))
+        form = RegisterForm()
         if request.method == "POST":
             if not form.validate():
                 session["formdata"] = request.form
