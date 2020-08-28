@@ -17,11 +17,13 @@ from flask_nav.elements import Navbar, View
 
 # # Database
 from flask_sqlalchemy import SQLAlchemy
+
 # # Various
 import os
 import requests
 import random
 from user_agents import parse as ua_parse
+
 # # Zoom
 import base64
 import threading
