@@ -42,9 +42,6 @@
     <fieldset>
       <legend>Setup</legend>
       {{ form.hidden_tag() }}
-      <div style="display: none;">
-        {{ wtf.form_field(form.token) }}
-      </div>
       {{ wtf.form_field(form.url) }}
       <i>Used for forwarding requests</i>
       {{ wtf.form_field(form.age) }}
