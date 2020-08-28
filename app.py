@@ -70,6 +70,7 @@ class User(db.Model):
     token = db.Column(db.String(1000))
     refresh = db.Column(db.String(1000))
     email = db.Column(db.String(60), unique=True)
+    webhook = db.Column(db.String(60), unique=True)
 
     def __repr__(self):
         return f"User {self.email} at {self.url}"
@@ -128,7 +129,7 @@ fc.start()
 # Form
 from flask_wtf import FlaskForm, RecaptchaField, Recaptcha
 from wtforms import TextField, BooleanField, SubmitField
-from wtforms.validators import Email, URL, DataRequired, InputRequired, ValidationError
+from wtforms.validators import Email, URL, DataRequired, InputRequired, ValidationError, Length
 import re
 
 
@@ -215,8 +216,15 @@ class RegisterForm(FlaskForm):
             check_url,
         ],
     )
+    webhook = TextField(
+        "Webhook ID",
+        [
+            InputRequired("What do you think you're getting away with? Fill in all fields."),
+            Length(min=10, "You don't want a hacker to guess your webhook, do you?"),
+        ],
+    )
     age = BooleanField(
-        "I'm >13 (so I have permission to store your email)", validators=[DataRequired()]
+        "I'm >13 (so I have permission to store your email)", validators=[DataRequired("So you're trying to get away with sharing your personal info?")]
     )
     recaptcha = RecaptchaField(
         "I'm not a robot spammer, or a spammer robot, or a spammer human, or a human spammer",
@@ -269,6 +277,7 @@ def thanks():
                     token=tokendata["access_token"],
                     refresh=tokendata["refresh_token"],
                     email=userdata["email"],
+                    webhook=userdata["webhook"],
                 )
                 decontaminate(email=userdata["email"])
                 db.session.add(user)
@@ -289,7 +298,9 @@ def webhook():
         "payload"
     ]["object"]["email"] in [user.email for user in User.query.all()]:
         users = {user.email: user for user in User.query.all()}
-        #requests.get("/api/webhook/" + webhook_info["payload"]["object"])
+        user = users[webhook_info["payload"]["object"]["email"]]
+        print(user.url + "api/webhook/" + user.webhook, {"status": webhook_info["payload"]["object"]["presence_status"]})
+        requests.get(user.url + "api/webhook/" + user.webhook, params={"status": webhook_info["payload"]["object"]["presence_status"]})
     else:
         print("Invalid:", webhook_info)
     return ""
